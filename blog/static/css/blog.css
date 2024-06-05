@@ -3,6 +3,7 @@
     margin-top: 0;
     margin-bottom: 40px;
     padding: 20px 20px 20px 40px;
+    position: fixed;
 }
 
 .page-header h1,
@@ -67,4 +68,18 @@ h4 {
 .btn-secondary:hover {
     color: #FFFFFF;
     background-color: #C25100;
+}
+
+.posting {
+    margin: auto;
+  width: 50%;
+  
+
+    overflow: auto;
+}
+.post-button {
+    color: #C25100;
+    position: fixed;
+    right: 30%;
+    top: 0%;
 }
