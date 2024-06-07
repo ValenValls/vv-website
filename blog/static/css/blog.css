@@ -1,19 +1,31 @@
-.page-header {
-    background-color: #C25100;
-    margin-top: 0;
-    margin-bottom: 40px;
-    padding: 20px 20px 20px 40px;
+#sidebar {
     position: fixed;
+    left:0;
+    top:0;
+    width: 150px;
+    height: 100%;
+    background-color: rgb(47, 155, 88);
 }
 
-.page-header h1,
-.page-header h1 a,
-.page-header h1 a:visited,
-.page-header h1 a:active {
-    color: #ffffff;
-    font-size: 36pt;
-    text-decoration: none;
+#main-content {
+    margin-left: 150px;
+    width: calc(100%-200px);
+    overflow: auto;
 }
+
+#toolbar {
+    position: fixed;
+    top:0;
+    right: 0;
+    width: 100px;
+    height: 100%;
+    background-color: rgb(47, 155, 88);    
+}
+
+ul {
+    list-style: none;
+    padding-inline-start: 5%;
+  }
 
 h1,
 h2,
@@ -28,20 +40,7 @@ h4 {
 
 .save {
     float: right;
-}
-
-.post-form textarea,
-.post-form input {
-    width: 100%;
-}
-
-.top-menu,
-.top-menu:hover,
-.top-menu:visited {
-    color: #ffffff;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+    margin-right: 100px;
 }
 
 .post {
@@ -56,6 +55,7 @@ h4 {
 .post > .date,
 .post > .actions {
     float: right;
+    margin-right: 100px;
 }
 
 .btn-secondary,
@@ -63,6 +63,7 @@ h4 {
     color: #C25100;
     background: none;
     border-color: #C25100;
+    margin-left: 5px;
 }
 
 .btn-secondary:hover {
@@ -70,16 +71,3 @@ h4 {
     background-color: #C25100;
 }
 
-.posting {
-    margin: auto;
-  width: 50%;
-  
-
-    overflow: auto;
-}
-.post-button {
-    color: #C25100;
-    position: fixed;
-    right: 30%;
-    top: 0%;
-}

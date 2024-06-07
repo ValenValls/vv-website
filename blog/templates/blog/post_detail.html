@@ -1,19 +1,33 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <article class="post">
-        <aside class="actions">
-            {% if user.is_authenticated %}
-                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+<div id="toolbar">
+    <ul>
+        {% if user.is_authenticated %}
+
+        <li><a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
                 {% include './icons/pencil-fill.svg' %}
-                </a>
-            {% endif %}
-        </aside>
-        {% if post.published_date %}
-            <time class="date">
-                {{ post.published_date }}
-            </time>
+            </a>
+
+        </li>
+        <li><a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">Delete</a></li>
         {% endif %}
+
+
+        {% if not post.published_date %}
+        <li><a class="btn btn-secondary" href="{% url 'post_publish' pk=post.pk %}">Publish</a></li>
+        {% endif %}
+</div>
+<div id="main-content">
+    <article class="post">
+        {% if post.published_date %}
+        <div class="date">
+            {{ post.published_date }}
+        </div>
+        {% endif %}
+
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
     </article>
+</div>
+
 {% endblock %}
