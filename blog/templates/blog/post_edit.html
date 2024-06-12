@@ -5,12 +5,16 @@
 
 </div>
 <div id="main-content">
-
-    <h2>New post</h2>
+    <div class = "form_with">
+        <h2>New post</h2>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-secondary">Save</button>
+        <button type="submit" name="save" class="save btn btn-secondary">Save as draft</button>
+        <button type="submit" name="post" class="save btn btn-secondary">Post</button>
     </form>
+
+    </div>
+    
 </div>
 
 {% endblock %}

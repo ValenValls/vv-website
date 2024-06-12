@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ViVis</title>      
+        <title>Vivis</title>      
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,9 +12,9 @@
 
     <body>        
         <div id="sidebar">
-            <h1>ViVis</h1>       
+            <h1>Vivis</h1>       
             {% if user.is_authenticated %}
-            <p >Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p> 
+            <p >Hello {{ user.username }} </p> <small><a href="{% url 'logout' %}">Log out</a></small>
             {% else %}
             <a href="{% url 'login' %}">Log in </a>
             <a href="{% url 'signup' %}">Sign up new account</a>
