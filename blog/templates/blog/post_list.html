@@ -33,15 +33,16 @@
         <p class ="post-text">{{ post.text|linebreaksbr }}</p>
         {% if post.photo %}
         <img class= "post-photo"  src="{{ post.photo.url }}" alt="{{ post.title }}">
-    {% endif %}
-    {% if post.comments.count == 0 %}
-    <p class ="post-author">Said {{ post.author|linebreaksbr }} and got {{ post.comments.count }} comments about it. <img class= "laughing-cat"  src="{% static 'img/laughing-cat.jpg' %}" ></p>
-        {% else %}
-        <p class ="post-author">Said {{ post.author|linebreaksbr }} and got {{ post.comments.count }} comments about it.</p>
-        {% endif %}
-
-        
-        
+        {% endif %}    
+        <p class ="post-author">Said {{ post.author|linebreaksbr }}, 
+            {% if post.last_editor != post.author %}
+             then edited by {{post.last_editor}} 
+            {% endif %}
+             , and got {{ post.comments.count }} comments about it. 
+             {% if post.comments.count == 0 %} 
+             <img class= "laughing-cat"  src="{% static 'img/laughing-cat.jpg' %}" >
+             {% endif %}     
+        </p>
     </article>
 </a>
     {% endfor %}

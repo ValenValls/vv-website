@@ -25,12 +25,14 @@ class SignUpView(CreateView):
 @login_required   
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user      
             if 'post' in request.POST:
-                post.published_date = timezone.now()                   
+                post.published_date = timezone.now()  
+            if form.cleaned_data.get('photo') != None:
+                post.photo = form.cleaned_data.get('photo')                 
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -44,7 +46,7 @@ def post_edit(request, pk):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)            
-            post.author = request.user
+            post.last_editor = request.user
             if post.published_date != None:
                 post.published_date = timezone.now()                
             if form.cleaned_data.get('photo') != None:
