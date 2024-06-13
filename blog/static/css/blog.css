@@ -112,7 +112,13 @@ a {
 .post-author,.comment-author{
     margin-left: 150px;
 }
-
+.post-photo{
+    max-width: 40%; /* Replace with your X value */
+    max-height: 40%; /* Replace with your Y value */
+    width: auto;
+    height: auto;
+    margin-left: 30%;
+}
 .no-comment{
     background-color: #828282;
 }

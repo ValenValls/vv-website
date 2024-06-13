@@ -7,7 +7,7 @@
 <div id="main-content">
     <div class = "form_with_background">
         <h2>New post</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" name="save" class="save btn btn-secondary">Save as draft</button>
         <button type="submit" name="post" class="save btn btn-secondary">Post</button>

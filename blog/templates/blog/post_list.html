@@ -29,10 +29,15 @@
         
         <h2 class="post-title"><a href="{% url 'post_detail' pk=post.pk %}" >{{ post.title }}</a></h2>        
         <p class ="post-text">{{ post.text|linebreaksbr }}</p>
+        {% if post.photo %}
+        <img class= "post-photo"  src="{{ post.photo.url }}" alt="{{ post.title }}">
+    {% endif %}
         <p class ="post-author">Said {{ post.author|linebreaksbr }} and got {{ post.comments.count }} comments about it.</p>
         
     </article>
     {% endfor %}
+    
+
 </div>
 
 

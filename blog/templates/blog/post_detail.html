@@ -28,6 +28,9 @@
 
         <h2 class="post-title">{{ post.title }}</h2>
         <p class="post-text">{{ post.text|linebreaksbr }}</p>
+        {% if post.photo %}
+                <img class= "post-photo" src="{{ post.photo.url }}" alt="{{ post.title }}">
+        {% endif %}
         <p class="post-author">Said {{ post.author|linebreaksbr }} </p>
     </article>
     <hr>
@@ -36,6 +39,7 @@
             <div class="date">{{ comment.created_date }}</div>
             
             <p class = "comment-text">{{ comment.text|linebreaksbr }}</p>
+            
             <p class="comment-author">Commented {{ comment.author }}</strong>
             <a class="btn-remove-comment" href="{% url 'comment_remove' pk=comment.pk %}">
                 {% include './icons/trash.svg' %}

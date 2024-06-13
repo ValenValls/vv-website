@@ -14,7 +14,7 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=pk)    
     return render(request, 'blog/post_detail.html', {'post': post})
 
 class SignUpView(CreateView):
@@ -36,16 +36,19 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+
 @login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
+            post = form.save(commit=False)            
             post.author = request.user
             if post.published_date != None:
-                post.published_date = timezone.now()
+                post.published_date = timezone.now()                
+            if form.cleaned_data.get('photo') != None:
+                post.photo = form.cleaned_data.get('photo')
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
