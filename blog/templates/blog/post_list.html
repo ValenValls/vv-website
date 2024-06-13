@@ -35,13 +35,14 @@
         <img class= "post-photo"  src="{{ post.photo.url }}" alt="{{ post.title }}">
         {% endif %}    
         <p class ="post-author">Said {{ post.author|linebreaksbr }}
-            {% if post.last_editor != post.author and post.last_editor != None%}
-            , then edited by {{post.last_editor}},
-            {% endif %}
+            
             and got {{ post.comments.count }} comments about it. 
              {% if post.comments.count == 0 %} 
              <img class= "laughing-cat"  src="{% static 'img/laughing-cat.jpg' %}" >
-             {% endif %}    
+             {% endif %}     
+             
+            {% if post.last_editor != post.author and post.last_editor != None%}<br> {{post.last_editor}} edited it too.
+            {% endif %}
         </p>
     </article>
 </a>
