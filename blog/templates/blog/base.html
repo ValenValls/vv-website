@@ -12,17 +12,17 @@
 
     <body>        
         <div id="sidebar">
-            <h1>Vivis</h1>       
+            <a class= "page-title" href="{% url 'post_list' %}"><h1>Vivis</h1> </a>      
             {% if user.is_authenticated %}
-            <p >Hello {{ user.username }} </p> <small><a href="{% url 'logout' %}">Log out</a></small>
+            <p >Hello {{ user.username }} </p> <small><a  class = "account-link" href="{% url 'logout' %}">Log out</a></small>
             {% else %}
-            <a href="{% url 'login' %}">Log in </a>
-            <a href="{% url 'signup' %}">Sign up new account</a>
+            <a class = "account-link" href="{% url 'login' %}">Log in </a>
+            <a class = "account-link" href="{% url 'signup' %}">Sign up new account</a>
             {% endif %}    
             <nav>
                 <ul>
-                    <li><a href="{% url 'post_list' %}">Home</a></li>
-                    <li><a href="{% url 'post_list' %}">Blog</a></li>
+                    <li><a class = "page-link" href="{% url 'post_list' %}">Home</a></li>
+                    <li><a class = "page-link" href="{% url 'post_list' %}">Blog</a></li>
                     <!-- Add more pages here -->
                 </ul>
             </nav>

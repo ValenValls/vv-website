@@ -11,14 +11,19 @@
     margin-left: 20px;
     margin-bottom: 0px;
 }
-#sidebar a {
+.page-link, .account-link {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 15px;
     color: #1b1b1b;
     display: block;
     margin-left: 20px;
-  }
+}
+.page-title{
+    text-decoration: none;
+    display: block;
+    color: #1b1b1b;
+}
 #sidebar a:hover {
     color: #f1f1f1;
 }
@@ -102,7 +107,13 @@ body{
     width: 50px ;
     height: 50px;
 }
-
+.laughing-cat{
+    width: 40px ;
+    height: 40px;
+    
+    border: 2px solid #4ba0c7;
+    
+}
 a {
     text-decoration: none;
   }
@@ -121,4 +132,10 @@ a {
 }
 .no-comment{
     background-color: #828282;
+}
+.post-link{
+
+        color: inherit;
+        text-decoration: inherit;
+    
 }
