@@ -28,8 +28,8 @@
         </time>
         
         <h2 class="post-title"><a href="{% url 'post_detail' pk=post.pk %}" >{{ post.title }}</a></h2>        
-        <p class = "post-text">{{ post.text|linebreaksbr }}</p>
-        <p class="post-author">Says {{ post.author|linebreaksbr }} </p>
+        <p class ="post-text">{{ post.text|linebreaksbr }}</p>
+        <p class ="post-author">Said {{ post.author|linebreaksbr }} and got {{ post.comments.count }} comments about it.</p>
         
     </article>
     {% endfor %}

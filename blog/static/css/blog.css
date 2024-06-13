@@ -57,12 +57,12 @@ h4 {
     color: #828282;
 }
 
-.save {
+.save,.btn-remove-comment {
     float: right;
     margin-right: 100px;
 }
 
-.post {
+.post,.comment {
     
     margin-bottom: 70px;
     background-color: #AAABB8;
@@ -86,14 +86,16 @@ body{
     background-color: #25274D;
 }
 .post > .date,
-.post > .actions {
+.post > .actions, .comment >.date {
     float: right;
     margin-right: 10px;
     margin-top: 3px;
     
     
 }
-
+.comment-text{
+    margin-left: 100px;
+}
 
 
 .post-button{
@@ -107,6 +109,10 @@ a {
 .post-text{
     margin-left: 100px;
 }
-.post-author{
+.post-author,.comment-author{
     margin-left: 150px;
+}
+
+.no-comment{
+    background-color: #828282;
 }

@@ -10,6 +10,7 @@
 
         </li>
         <li><a href="{% url 'post_remove' pk=post.pk %}" title="Delete post">{% include './icons/trash.svg' %}</a></li>
+        <li><a href="{% url 'add_comment_to_post' pk=post.pk %}" title="Comment post">{% include './icons/comment-dots.svg' %}</a></li>
         {% endif %}
 
 
@@ -27,8 +28,22 @@
 
         <h2 class="post-title">{{ post.title }}</h2>
         <p class="post-text">{{ post.text|linebreaksbr }}</p>
-        <p class="post-author">Says {{ post.author|linebreaksbr }} </p>
+        <p class="post-author">Said {{ post.author|linebreaksbr }} </p>
     </article>
+    <hr>
+    {% for comment in post.comments.all %}
+        <article class="comment">
+            <div class="date">{{ comment.created_date }}</div>
+            
+            <p class = "comment-text">{{ comment.text|linebreaksbr }}</p>
+            <p class="comment-author">Commented {{ comment.author }}</strong>
+            <a class="btn-remove-comment" href="{% url 'comment_remove' pk=comment.pk %}">
+                {% include './icons/trash.svg' %}
+             </a>
+        </article>
+    {% empty %}
+        <p class="no-comment">No comments here yet :(</p>
+    {% endfor %}
 </div>
 
 {% endblock %}
