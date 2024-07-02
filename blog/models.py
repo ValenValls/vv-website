@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
+import ollama 
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='authored_posts')   
@@ -13,8 +13,12 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     photo = models.ImageField(upload_to='post-images', blank=True, null=True)
     def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+        self.published_date = timezone.now() 
+        self.save()       
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        response = ollama.chat(model='gengis', messages=[{ 'role': 'system', 'content': 'You are the great Genghis Khan, Mongol emperator'},{'role': 'user', 'content': 'Title: ('+ self.title + ') Text: ('+ self.text + ')'}])
+        Comment.objects.create(post=self, author='TheBestKh4n', text=response['message']['content'], created_date = self.published_date)
 
     def __str__(self):
         return self.title
