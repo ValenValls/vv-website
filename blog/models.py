@@ -2,7 +2,10 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-import ollama 
+import google.generativeai as genai
+
+token = 'AIzaSyAragfuFeJYhDsWh9HZN7R-yVB4h7YlfJk'
+genai.configure(api_key=token)
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='authored_posts')   
@@ -17,8 +20,34 @@ class Post(models.Model):
         self.save()       
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        response = ollama.chat(model='gengis', messages=[{ 'role': 'system', 'content': 'You are the great Genghis Khan, Mongol emperator'},{'role': 'user', 'content': 'Title: ('+ self.title + ') Text: ('+ self.text + ')'}])
-        Comment.objects.create(post=self, author='TheBestKh4n', text=response['message']['content'], created_date = self.published_date)
+        model_id = "meta-llama/Meta-Llama-3-8B"
+        safety_settings = [
+            {
+                "category": "HARM_CATEGORY_DANGEROUS",
+                "threshold": "BLOCK_NONE",
+            },
+            {
+                "category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_NONE",
+            },
+            {
+                "category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_NONE",
+            },
+            {
+                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_NONE",
+            },
+            {
+                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_NONE",
+            },
+        ]
+        personalities = [["Genghis Khan, the mongol emperor","TheKhadKhan"], ["Julius Caesar, the Roman emperor", "IVeniVidiViciInYourM0M"]]
+        instruction = "You are " + personalities[0][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post."
+        model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)       
+        response = model.generate_content("Title: " + self.title + ", Text: " + self.text)
+        Comment.objects.create(post=self, author=personalities[0][1], text=response.text, created_date = self.published_date)
 
     def __str__(self):
         return self.title
