@@ -60,22 +60,22 @@ class Post(models.Model):
         super().save(*args, **kwargs)        
         personalitycom = random.randrange(len(personalities))
         #self.personality_suscribed = personalitycom
-        if (self.photo == None):
-            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. You can answer in English or Spanish, as you see more fit"
+        if not self.photo :
+            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post."
             model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)  
             response = model.generate_content("Title: " + self.title + ", Text: " + self.text)  
         else:   
-            print(self.photo)
+            
             image1 = {
                 'mime_type': 'image/jpeg',
                 'data': self.photo.read()
             }
-            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. The post also has an image attached. You can answer in English or Spanish, as you see more fit"
+            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. The post also has an image attached."
             model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)  
             response = model.generate_content(["Title: " + self.title + ", Text: " + self.text, image1]) 
             
-        
-        Comment.objects.create(post=self, author=personalities[personalitycom][1], text=response.text, created_date = self.published_date)
+        if( not (" AI " in response.text) ):
+            Comment.objects.create(post=self, author=personalities[personalitycom][1], text=response.text, created_date = self.published_date)
 
     def __str__(self):
         return self.title
