@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 import google.generativeai as genai
 
-token = 'AIzaSyAragfuFeJYhDsWh9HZN7R-yVB4h7YlfJk'
+token = ''
 genai.configure(api_key=token)
 
 class Post(models.Model):
