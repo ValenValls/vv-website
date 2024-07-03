@@ -5,6 +5,7 @@ from django.utils import timezone
 import google.generativeai as genai
 import os 
 import random
+import pathlib
 
 google_token = os.getenv('GENAI_API_KEY')
 genai.configure(api_key=google_token)
@@ -51,16 +52,29 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     photo = models.ImageField(upload_to='post-images', blank=True, null=True)
+    #personality_suscribed = models.IntegerField()
     def publish(self):
         self.published_date = timezone.now() 
         self.save()       
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        
+        super().save(*args, **kwargs)        
         personalitycom = random.randrange(len(personalities))
-        instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. You can answer in English or Spanish, as you see more fit"
-        model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)       
-        response = model.generate_content("Title: " + self.title + ", Text: " + self.text)
+        #self.personality_suscribed = personalitycom
+        if (self.photo == None):
+            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. You can answer in English or Spanish, as you see more fit"
+            model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)  
+            response = model.generate_content("Title: " + self.title + ", Text: " + self.text)  
+        else:   
+            print(self.photo)
+            image1 = {
+                'mime_type': 'image/jpeg',
+                'data': self.photo.read()
+            }
+            instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. The post also has an image attached. You can answer in English or Spanish, as you see more fit"
+            model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)  
+            response = model.generate_content(["Title: " + self.title + ", Text: " + self.text, image1]) 
+            
+        
         Comment.objects.create(post=self, author=personalities[personalitycom][1], text=response.text, created_date = self.published_date)
 
     def __str__(self):
