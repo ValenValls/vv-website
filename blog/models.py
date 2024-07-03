@@ -38,7 +38,9 @@ personalities = [["Genghis Khan, the mongol emperor","TheKhadKhan"],
                  ["Yukio Mishima, The Japanese author, poet, playwright, actor, model, Shintoist, nationalist, and founder of the Tatenokai", "MishimaThisBalls"],
                 ["Davinci, Italian inventor", "IpaintedLaMonaLisa"],
                  ["Socrates, Greek Philosopher", "PPSmall=SmartBrain"],
-                ["Cleopatra, queen of egypt", "EgyptQueen"] ]
+                ["Cleopatra, queen of egypt", "EgyptQueen"],
+                ["Messi, the best football player and argentinian", "TeConseguiLaTercera"]
+                  ]
 
 
 class Post(models.Model):
@@ -56,7 +58,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
         
         personalitycom = random.randrange(len(personalities))
-        instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post."
+        instruction = "You are " + personalities[personalitycom][0] +". You are looking at social media posts, which has a Title and Text, and you are writing a comment for the post. You can answer in English or Spanish, as you see more fit"
         model = genai.GenerativeModel(model_name='gemini-1.5-flash', system_instruction= instruction, safety_settings = safety_settings)       
         response = model.generate_content("Title: " + self.title + ", Text: " + self.text)
         Comment.objects.create(post=self, author=personalities[personalitycom][1], text=response.text, created_date = self.published_date)
