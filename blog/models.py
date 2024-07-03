@@ -5,7 +5,7 @@ from django.utils import timezone
 import google.generativeai as genai
 import os 
 import random
-import pathlib
+
 
 google_token = os.getenv('GENAI_API_KEY')
 genai.configure(api_key=google_token)
